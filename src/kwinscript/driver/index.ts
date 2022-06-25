@@ -62,6 +62,8 @@ export interface Driver {
 
   onCurrentDesktopChanged(): void;
 
+  onNumberDesktopsChanged(oldNumDesktops: number): void;
+
   /**
    * Bind script to the various KWin events
    */
@@ -360,6 +362,10 @@ export class DriverImpl implements Driver {
       this.controller.onCurrentDesktopChanged()
     );
 
+    this.connect(this.kwinApi.workspace.numberDesktopsChanged, (num: number) =>
+      this.onNumberDesktopsChanged(num)
+    );
+
     this.connect(this.kwinApi.workspace.clientAdded, onClientAdded);
     this.connect(this.kwinApi.workspace.clientRemoved, onClientRemoved);
     this.connect(this.kwinApi.workspace.clientMaximizeSet, onClientMaximizeSet);
@@ -520,6 +526,18 @@ export class DriverImpl implements Driver {
     //     surf.screen
     //   );
     // }
+  }
+
+  public onNumberDesktopsChanged(oldNumDesktops: number): void {
+    this.log.log(
+      `onNumberDesktopsChanged from ${oldNumDesktops} to ${
+        this.proxy.workspace().desktops
+      }`
+    );
+    if (this.proxy.workspace().desktops < 2) {
+      this.log.log("Too few desktops! Adding one desktop.");
+      this.proxy.workspace().desktops++;
+    }
   }
 
   public drop(): void {
