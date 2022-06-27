@@ -358,15 +358,11 @@ export class DriverImpl implements Driver {
       );
 
     this.connect(this.kwinApi.workspace.currentActivityChanged, () =>
-      this.controller.onCurrentActivityChanged()
+      this.controller.onCurrentSurfaceChanged()
     );
 
     this.connect(this.kwinApi.workspace.currentDesktopChanged, () =>
-      this.controller.onCurrentDesktopChanged()
-    );
-
-    this.connect(this.kwinApi.workspace.numberDesktopsChanged, (num: number) =>
-      this.onNumberDesktopsChanged(num)
+      this.controller.onCurrentSurfaceChanged()
     );
 
     this.connect(this.kwinApi.workspace.clientAdded, onClientAdded);
