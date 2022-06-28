@@ -62,7 +62,7 @@ void Decoration::updateColors()
     auto group = colorsConfig->group("Colors:Window");
     // m_activeColor = group.readEntry("DecorationFocus", QColor(255, 0, 0));
     // m_activeColor = QColor(0, 255, 0);
-    m_activeColor = QColor(255, 0, 0);
+    m_activeColor = QColor(255, 170, 204);
     // m_inactiveColor = group.readEntry("BackgroundNormal", QColor(0, 0, 0));
     m_inactiveColor = QColor(Qt::transparent);
 }
